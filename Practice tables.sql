@@ -1,49 +1,50 @@
+
 -- Create the Customers table
 CREATE TABLE Customers (
-    customer_id INT PRIMARY KEY,
-    customer_name VARCHAR(100),
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_name VARCHAR(100) NOT NULL,
     contact_name VARCHAR(100),
     country VARCHAR(50)
 );
 
--- Create the Orders table
-CREATE TABLE Orders (
-    order_id INT PRIMARY KEY,
-    order_date DATE,
-    customer_id INT,
-    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
-);
-DROP table Products
 -- Create the Products table
 CREATE TABLE Products (
-    product_id INT PRIMARY KEY,
-    product_name VARCHAR(100),
-    price DECIMAL(10, 2)
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
+);
+
+-- Create the Orders table
+CREATE TABLE Orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_date DATE NOT NULL,
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
 -- Create the OrderDetails table
 CREATE TABLE OrderDetails (
-    order_detail_id INT PRIMARY KEY,
+    order_detail_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     product_id INT,
-    quantity INT
-    
+    quantity INT NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 
-drop table OrderDetails
 
 -- Insert data into the Customers table
-INSERT INTO Customers (customer_id, customer_name, contact_name, country) VALUES
-(1, 'Customer A', 'Contact A', 'USA'),
-(2, 'Customer B', 'Contact B', 'Canada'),
-(3, 'Customer C', 'Contact C', 'UK');
+INSERT INTO Customers (customer_name, contact_name, country) VALUES
+('Customer A', 'Contact A', 'USA'),
+('Customer B', 'Contact B', 'Canada'),
+('Customer C', 'Contact C', 'UK');
 
-SELECT * FROM Customers
 -- Insert data into the Products table
 INSERT INTO Products (product_name, price) VALUES
 ('Product X', 19.99),
 ('Product Y', 29.99),
 ('Product Z', 39.99);
+
 
 -- Insert data into the Orders table
 INSERT INTO Orders (order_date, customer_id) VALUES
@@ -52,37 +53,39 @@ INSERT INTO Orders (order_date, customer_id) VALUES
 ('2024-03-01', 3),
 ('2024-04-01', 1);
 
+
 -- Insert data into the OrderDetails table
-INSERT INTO OrderDetails (order_detail_id, order_id, product_id, quantity) VALUES
-(123, 1, 1, 2),
-(456, 1, 2, 1),
-(789, 2, 1, 1),
-(011, 2, 3, 2),
-(022, 3, 2, 3),
-(033, 4, 1, 1),
-(044, 4, 3, 1);
+INSERT INTO OrderDetails (order_id, product_id, quantity) VALUES
+(1, 1, 2),
+(1, 2, 1),
+(2, 1, 1),
+(2, 3, 2),
+(3, 2, 3),
+(4, 1, 1),
+(4, 3, 1);
 
 
-select * from Customers;
-select * from Products;
-select * from Orders;
-select * from OrderDetails;
+-- Query Customers table
+SELECT * FROM Customers;
 
--- Create the table
-CREATE TABLE salesman (
-    salesman_id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    city VARCHAR(50) NOT NULL,
-    commission DECIMAL(3, 2) NOT NULL
-);
+-- Query Products table
+SELECT * FROM Products;
 
--- Insert data into the table
-INSERT INTO salesman (salesman_id, name, city, commission) VALUES
-(5001, 'James Hoog', 'New York', 0.15),
-(5002, 'Nail Knite', 'Paris', 0.13),
-(5005, 'Pit Alex', 'London', 0.11),
-(5006, 'Mc Lyon', 'Paris', 0.14),
-(5007, 'Paul Adam', 'Rome', 0.13),
-(5003, 'Lauson Hen', 'San Jose', 0.12);
+-- Query Orders table
+SELECT * FROM Orders;
 
+-- Query OrderDetails table
+SELECT * FROM OrderDetails;
 
+--get the details of all orders along with customer names
+
+select Orders.order_id, Orders.order_date, Customers.customer_name
+from Orders
+left JOIN Customers
+on Orders.customer_id = Customers.customer_id
+
+--get all the customers and the orders 
+
+select * from Customers
+
+select * from Orders
