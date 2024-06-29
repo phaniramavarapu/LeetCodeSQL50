@@ -23,3 +23,4 @@ for col in df.columns:
 
 df.dtypes
 
+df.boxplot(column=['gross'])
