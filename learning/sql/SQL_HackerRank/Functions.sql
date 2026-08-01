@@ -1,0 +1,1 @@
+select substring_index('john.doe@gmail.com', '@', 2) 
