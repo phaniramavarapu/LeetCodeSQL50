@@ -10,6 +10,7 @@ This repository contains programming practice, coursework, and personal projects
 - `learning/html-css` - HTML and CSS practice
 - `learning/javascript` - JavaScript practice
 - `learning/sql` - SQL practice and datasets
+- `learning/sql/leetcodesql50` - LeetCode SQL practice
 
 ## Projects
 
